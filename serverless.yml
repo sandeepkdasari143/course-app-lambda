@@ -1,0 +1,24 @@
+service: user-auth-lambda
+frameworkVersion: '3'
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 128
+  region: ap-south-1
+  stage: ${opt:stage, 'dev'}
+
+functions:
+  registerUser:
+    handler: src/auth/registerUser.handler
+    events: 
+      -httpApi:
+        path: /auth/register
+        method: POST
+    
+
+resources:
